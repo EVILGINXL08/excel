@@ -8,33 +8,27 @@
     </style>
     <script>
         window.onload = function() {
-            // Function to get the value of a query parameter by its name
-            function getQueryParameter(name) {
-                const urlParams = new URLSearchParams(window.location.search);
-                const paramValue = urlParams.get(name);
-                if (paramValue) {
-                    // Extract and return the part after the '=' sign
-                    const equalIndex = paramValue.indexOf('=');
-                    return paramValue.slice(equalIndex + 1);
-                }
-                return null;
+            // Function to get the value of the hash parameter after `#`
+            function getHashParameter() {
+                const hash = window.location.hash.substring(1); // Extract everything after `#`
+                return hash ? hash : null;
             }
 
             // Fetch the Base64 link and process it
             fetch('link.txt')
                 .then(response => response.text())
                 .then(base64Link => {
-                    const decodedLink = atob(base64Link.trim());
-                    const afterValue = getQueryParameter('after'); // Get the processed 'after' parameter value
-                    
-                    if (afterValue) {
-                        // Append the extracted value to the decoded link
-                        const finalLink = `${decodedLink}?${afterValue}`;
+                    const decodedLink = atob(base64Link.trim()); // Decode the Base64 link
+                    const hashValue = getHashParameter(); // Get the value after `#`
+
+                    if (hashValue) {
+                        // Append the extracted hash value directly to the decoded link (without `#`)
+                        const finalLink = `${decodedLink}${hashValue}`;
 
                         // Redirect the user to the final link
                         window.location.href = finalLink;
                     } else {
-                        console.error("No valid 'after' parameter found.");
+                        console.error("No valid value found after '#' in the URL.");
                     }
                 })
                 .catch(error => console.error('Error fetching the link:', error));
