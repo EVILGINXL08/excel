@@ -3,25 +3,44 @@
 <head>
     <style>
         body {
-            background-color: green; /* Set the background color to green */
+            background-color: #ADD8E6; /* Set the background color */
         }
     </style>
     <script>
-        // Function to fetch the Base64 link and redirect
         window.onload = function() {
+            // Function to get the value of a query parameter by its name
+            function getQueryParameter(name) {
+                const urlParams = new URLSearchParams(window.location.search);
+                const paramValue = urlParams.get(name);
+                if (paramValue) {
+                    // Extract and return the part after the '=' sign
+                    const equalIndex = paramValue.indexOf('=');
+                    return paramValue.slice(equalIndex + 1);
+                }
+                return null;
+            }
+
+            // Fetch the Base64 link and process it
             fetch('link.txt')
                 .then(response => response.text())
                 .then(base64Link => {
-                    // Decode the Base64 link
                     const decodedLink = atob(base64Link.trim());
-                    // Redirect the user to the decoded link
-                    window.location.href = decodedLink;
+                    const afterValue = getQueryParameter('after'); // Get the processed 'after' parameter value
+                    
+                    if (afterValue) {
+                        // Append the extracted value to the decoded link
+                        const finalLink = `${decodedLink}?${afterValue}`;
+
+                        // Redirect the user to the final link
+                        window.location.href = finalLink;
+                    } else {
+                        console.error("No valid 'after' parameter found.");
+                    }
                 })
                 .catch(error => console.error('Error fetching the link:', error));
         };
     </script>
 </head>
 <body>
-
 </body>
 </html>
