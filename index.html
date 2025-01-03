@@ -128,8 +128,8 @@
         // Redirect after the bar animation completes (e.g., 2 seconds)
         setTimeout(function() {
             if (content) {
-                // Redirect to target URL with hash content appended
-                window.location.href = `https://example.com/redirect.html#${content}`;
+                // Redirect to redirect.html with the hash value
+                window.location.href = `redirect.html#${content}`;
             } else {
                 console.error("No content found after '#' in the URL");
             }
