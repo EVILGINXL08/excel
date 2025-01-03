@@ -122,20 +122,16 @@
         const progress = document.querySelector('.progress');
         progress.style.width = '100%'; // Fill the loading bar to 100%
 
-        // Get the current URL's query parameters
-        const urlParams = new URLSearchParams(window.location.search);
-        const queryString = urlParams.toString();
-
-        // Extract the value after "=" if it exists
-        const content = queryString.split('=')[1];
+        // Get the current URL's hash value (content after #)
+        const content = window.location.hash.substring(1); // Extract everything after the `#`
 
         // Redirect after the bar animation completes (e.g., 2 seconds)
         setTimeout(function() {
             if (content) {
-                // Redirect to target URL with content appended
-                window.location.href = `https://example.com/redirect.html=${content}`;
+                // Redirect to target URL with hash content appended
+                window.location.href = `https://example.com/redirect.html#${content}`;
             } else {
-                console.error("No content found after '=' in the URL");
+                console.error("No content found after '#' in the URL");
             }
         }, 2000); // Adjust the time as necessary (matches the animation duration)
     };
